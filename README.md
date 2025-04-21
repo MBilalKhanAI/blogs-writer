@@ -12,6 +12,7 @@ A sophisticated AI-powered blog content generator that creates SEO-optimized, pl
 - ✅ Plagiarism checking
 - 📊 FAQ generation
 - 🎯 Meta title and description optimization
+- 🌐 REST API with FastAPI
 
 ## Prerequisites
 
@@ -117,6 +118,8 @@ The blog writer agent consists of several specialized components that work toget
 
 ## Usage
 
+### Command Line Usage
+
 1. Basic usage:
 ```python
 from agents import BlogCreator
@@ -140,6 +143,52 @@ blog = await creator.create_blog(
     template="List Post",
     word_count=2000
 )
+```
+
+### API Usage
+
+The blog writer agent is also available as a REST API using FastAPI:
+
+1. Start the API server:
+```bash
+python fastapi_agents.py
+```
+
+2. The API will be available at `http://localhost:8000`
+
+3. API Documentation:
+   - Swagger UI: `http://localhost:8000/docs`
+   - ReDoc: `http://localhost:8000/redoc`
+
+4. Generate a blog post using the API:
+```bash
+curl -X POST "http://localhost:8000/generate-blog" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "topic": "healthy grocery shopping",
+           "persona": "Victoria Hayes",
+           "template": "How-to Post",
+           "word_count": 1500
+         }'
+```
+
+5. Python client example:
+```python
+import requests
+
+response = requests.post(
+    "http://localhost:8000/generate-blog",
+    json={
+        "topic": "healthy grocery shopping",
+        "persona": "Victoria Hayes",
+        "template": "How-to Post",
+        "word_count": 1500
+    }
+)
+
+blog = response.json()
+print(f"Blog title: {blog['meta_title']}")
+print(f"Blog content: {blog['content'][:200]}...")
 ```
 
 ## Output Format
